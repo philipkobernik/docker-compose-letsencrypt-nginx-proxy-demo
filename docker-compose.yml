@@ -1,0 +1,31 @@
+version: "3"
+
+services:
+  web_prod:
+    environment:
+      VIRTUAL_HOST: ${DOMAINS_PROD}
+      LETSENCRYPT_HOST: ${DOMAINS_PROD}
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        env_string: "WELCOME TO PROD"
+    expose:
+      - "80"
+        
+  web_staging:
+    environment:
+      VIRTUAL_HOST: ${DOMAINS_STAGING}
+      LETSENCRYPT_HOST: ${DOMAINS_STAGING}
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        env_string: "WELCOME TO STAGING"
+    expose:
+      - "80"
+    
+networks:
+    default:
+       external:
+         name: webproxy
